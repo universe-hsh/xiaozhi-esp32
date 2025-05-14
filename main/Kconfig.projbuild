@@ -6,6 +6,11 @@ config OTA_URL
     help
         The application will access this URL to check for new firmwares and server address.
 
+config TEMPLATE_SECRET
+    string "Template Secret"
+    default "test-secret"
+    help
+        Template secret for the application.
 
 choice
     prompt "语言选择"

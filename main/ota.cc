@@ -67,6 +67,8 @@ Http* Ota::SetupHttp() {
     http->SetHeader("User-Agent", std::string(BOARD_NAME "/") + app_desc->version);
     http->SetHeader("Accept-Language", Lang::CODE);
     http->SetHeader("Content-Type", "application/json");
+    // 一型一密
+    http->SetHeader("Template-Secret", settings.GetString("template_secret"));
 
     return http;
 }
