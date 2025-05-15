@@ -29,6 +29,7 @@ Ota::Ota() {
         if (check_version_url_.empty()) {
             check_version_url_ = CONFIG_OTA_URL;
         }
+        template_secret_ = settings.GetString("template_secret");
     }
 
 #ifdef ESP_EFUSE_BLOCK_USR_DATA
@@ -67,8 +68,7 @@ Http* Ota::SetupHttp() {
     http->SetHeader("User-Agent", std::string(BOARD_NAME "/") + app_desc->version);
     http->SetHeader("Accept-Language", Lang::CODE);
     http->SetHeader("Content-Type", "application/json");
-    // 一型一密
-    http->SetHeader("Template-Secret", settings.GetString("template_secret"));
+    http->SetHeader("Template-Secret", template_secret_);
 
     return http;
 }

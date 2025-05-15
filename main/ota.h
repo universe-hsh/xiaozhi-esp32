@@ -30,11 +30,13 @@ public:
     const std::string& GetActivationMessage() const { return activation_message_; }
     const std::string& GetActivationCode() const { return activation_code_; }
     const std::string& GetCheckVersionUrl() const { return check_version_url_; }
+    const std::string& GetTemplateSecret() const { return template_secret_; }
 
 private:
     std::string check_version_url_;
     std::string activation_message_;
     std::string activation_code_;
+    std::string template_secret_;
     bool has_new_version_ = false;
     bool has_mqtt_config_ = false;
     bool has_websocket_config_ = false;
