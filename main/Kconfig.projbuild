@@ -8,7 +8,7 @@ config OTA_URL
 
 config TEMPLATE_SECRET
     string "Template Secret"
-    default "test-secret"
+    default "testsecret"
     help
         Template secret for the application.
 

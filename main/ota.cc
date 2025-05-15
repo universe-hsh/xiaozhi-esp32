@@ -29,7 +29,7 @@ Ota::Ota() {
         if (check_version_url_.empty()) {
             check_version_url_ = CONFIG_OTA_URL;
         }
-        template_secret_ = settings.GetString("template_secret");
+        template_secret_ = CONFIG_TEMPLATE_SECRET;
     }
 
 #ifdef ESP_EFUSE_BLOCK_USR_DATA
@@ -99,12 +99,15 @@ bool Ota::CheckVersion() {
     data = http->GetBody();
     delete http;
 
+    // 输出data
+    ESP_LOGI(TAG, "OTA Response Data: %s", data.c_str());
+
     // Response: { "firmware": { "version": "1.0.0", "url": "http://" } }
     // Parse the JSON response and check if the version is newer
     // If it is, set has_new_version_ to true and store the new version and URL
     
     cJSON *root = cJSON_Parse(data.c_str());
-    if (root == NULL) {
+    if (root == NULL || root->type != cJSON_Object) {
         ESP_LOGE(TAG, "Failed to parse JSON response");
         return false;
     }
@@ -159,7 +162,7 @@ bool Ota::CheckVersion() {
             if (item->type == cJSON_String) {
                 settings.SetString(item->string, item->valuestring);
             } else if (item->type == cJSON_Number) {
-                settings.SetInt(item->string, item->valueint);
+                // settings.SetInt(item->string, item->valueint);
             }
         }
         has_websocket_config_ = true;
